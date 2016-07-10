@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+source_array = eval ARGV[0]
+
+puts "Source Array:       #{source_array}"
+puts "Flattened Array:    #{source_array.flatten}"
+
+def my_flatten(array, new_array=[])
+  array.each do |v|
+    v.respond_to?(:each) ?
+      my_flatten(v, new_array) :
+      new_array.push(v)
+  end
+  new_array
+end
+
+flattened_array = my_flatten(source_array)
+
+puts "My Flattened Array: #{flattened_array}"
