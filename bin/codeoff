@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/message_builder'
+require_relative '../lib/obfuscator'
+
+# get source message from either STDIN or file (pointed from ARGV[0])
+msg = nil
+if STDIN.tty?
+  File.open(ARGV[0], 'r') { |f| msg = f.read }
+else
+  msg = STDIN.read
+end
+
+puts <<MESSAGE
+Obfuscating message:
+
+#{msg}
+Obfuscated message:
+
+#{ Obfuscator.new(MessageBuilder.new(msg).message).secret }
+MESSAGE
